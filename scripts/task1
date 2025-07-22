@@ -1,0 +1,11 @@
+#/bin/bash
+
+find ../folder1/httpd -type f | while read -r file; do
+    if [ -f "$file" ]; then
+        a=$(ls -l $file)
+        mon=$(awk '{print $6}' <<< "$a")
+        year=$(awk '{print $8}' <<< "$a")
+        x=$(echo "$mon $year")
+        yq e -i '(.${x}) //= [] | .${x} + [{"filename: "\"$file\"}]' "$yamlFile" 
+    fi
+done

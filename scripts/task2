@@ -1,0 +1,14 @@
+#/bin/bash
+yamlFile="../task2.yaml"
+find ../folder1/httpd -type f | while read -r file; do
+    if [ -f "$file" ]; then
+        extension="${file##*.}"
+        if yq e ".${extension}" "$yamlFile" ; then
+            value=$(yq e ".${extension}" "$yamlFile")
+            newVal=$((current_val + 1))
+            yq e -i ".${extension} = ${newVal}" "$yamlFile"
+        else
+            yq e -i ".${extension} = 1" "$yamlFile"
+
+    fi
+done
