@@ -1,0 +1,8 @@
+#!/bin/bash
+
+file="../task4.txt"
+find ../folder1/httpd -type f -exec ls -lS {} + | head -n 5 | while read -r line; do
+    fileName=$(basename $(echo "$line" | awk '{print $9}'))
+    fileSize=$(echo "$line" | awk '{print $5}')
+    echo "$fileName : $fileSize" >> "$file"
+done
