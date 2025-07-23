@@ -1,7 +1,7 @@
 #!/bin/bash
 
 yamlFile="../hi.yaml"
-
+#abc
 find "../folder1/httpd" -type f | while read -r file; do
     if [ -f "$file" ]; then
         export file
