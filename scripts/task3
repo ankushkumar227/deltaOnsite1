@@ -1,0 +1,12 @@
+#!/bin/bash
+
+yamlFile="../hi.yaml"
+find ../folder1/httpd -type f | while read -r file; do
+    if [ -f "$file" ]; then
+        a=$(ls -l $file)
+        mon=$(awk '{print $6}' <<< "$a")
+        val=$(yq -e ".$mon" $yamlFile) || val=0
+        newVal=$((val + 1))
+        yq -i ".$mon = \"newVal\"" "$yamlFile"
+    fi
+done

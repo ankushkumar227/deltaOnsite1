@@ -1,11 +1,17 @@
-#/bin/bash
+#!/bin/bash
 
-find ../folder1/httpd -type f | while read -r file; do
+yamlFile="../hi.yaml"
+#abc
+find "../folder1/httpd" -type f | while read -r file; do
     if [ -f "$file" ]; then
+        export file
         a=$(ls -l $file)
         mon=$(awk '{print $6}' <<< "$a")
         year=$(awk '{print $8}' <<< "$a")
         x=$(echo "$mon $year")
-        yq e -i '(.${x}) //= [] | .${x} + [{"filename: "\"$file\"}]' "$yamlFile" 
+        export x
+        # yq -i ".$x += [strenv(file)]" "$yamlFile"
+        yq -i -e '.env(x) //= [] | .env(x) += [env(file)]' "$yamlFile"
+        # yq e '(.${x}) //= [] | .${x} + [{"filename: "\"$file\"}]' -i "$yamlFile" 
     fi
 done
