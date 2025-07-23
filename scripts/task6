@@ -1,1 +1,15 @@
 #!/bin/bash
+
+DATE=$(date +%Y-%m-%d)
+mkdir -p reports
+previousDate=$(date --date='7 days ago' +%Y-%m-%d)
+for task in task1 task2 task3 task4 task5; do
+    
+    reportDir="./reports/$taskREPORT$DATE.txt"
+    ./$task > $reportDir
+    find ./reports -type f -name "$taskREPORT$previousDate.txt" -exec rm -f {} +
+
+done
+
+
+# 0 0 * * 1 /home/elonaintdead/deltaOnsite1/scripts/task6
